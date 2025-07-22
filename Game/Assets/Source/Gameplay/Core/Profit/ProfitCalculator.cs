@@ -9,7 +9,7 @@ namespace Gameplay.Core
     {
         private readonly ITimeService _timeService;
         private readonly Profit _profit;
-        private readonly List<Shop> _openedShops;
+        private readonly List<Shop> _openedShops = new List<Shop>();
 
         public ProfitCalculator(ITimeService timeService, Profit profit)
         {
@@ -26,6 +26,8 @@ namespace Gameplay.Core
         {
             _ = Task.Run(() =>
             {
+                Debug.Log($"Start.");
+                
                 while (true)
                 {
                     List<Shop> shops = UnityEngine.Pool.ListPool<Shop>.Get();
