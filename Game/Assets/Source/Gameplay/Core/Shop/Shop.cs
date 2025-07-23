@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using UniRx;
+using ZLinq;
 
 namespace Gameplay.Core
 {
@@ -7,10 +9,15 @@ namespace Gameplay.Core
     {
         public int Id { get; private set; }
 
-        private readonly List<StorePart> _parts;
+        private readonly List<StorePart> _possibleParts;
         private ShopAppearance _appearance;
 
         public ReactiveProperty<float> TimeToCollect { get; private set; } = new ReactiveProperty<float>(0.0f);
+
+        public void Initialize()
+        {
+            
+        }
 
         public void UnlockStorePart()
         {
@@ -24,7 +31,7 @@ namespace Gameplay.Core
 
         public int GetProfit()
         {
-            return 1;
+            return _possibleParts.AsValueEnumerable().Where(part => part.Opened).Sum(part => part.Income);
         }
 
         public void ResetProfitTime()
