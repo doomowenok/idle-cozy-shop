@@ -21,11 +21,9 @@ namespace Infrastructure.Logger
             {
                 lock (_lock)
                 {
-                    using (var stream = File.Open(FileName, FileMode.Append, FileAccess.Write, FileShare.Read))
-                    {
-                        var bytes = Encoding.UTF8.GetBytes(content);
-                        stream.Write(bytes, 0, bytes.Length);
-                    } 
+                    using FileStream stream = File.Open(FileName, FileMode.Append, FileAccess.Write, FileShare.Read);
+                    byte[] bytes = Encoding.UTF8.GetBytes(content);
+                    stream.Write(bytes, 0, bytes.Length);
                 }
                 
                 return true;
