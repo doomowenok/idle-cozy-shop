@@ -63,7 +63,7 @@ namespace Infrastructure.Logger
                             Thread.Sleep(5);
                         }
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         break;
                     }
@@ -96,7 +96,7 @@ namespace Infrastructure.Logger
                 
                 _resetEvent.Set();
             }
-            catch (Exception _)
+            catch (Exception)
             {
                 // ignored
             }
