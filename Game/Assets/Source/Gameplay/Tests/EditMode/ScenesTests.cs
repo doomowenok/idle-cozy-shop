@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 
 namespace Gameplay.Tests.EditMode
 {
-    public class ValidationTests
+    public class ScenesTests
     {
         [TestCaseSource(nameof(AllScenePaths))]
         public void AllGameObjectsShouldNotHaveMissingScripts(string scenePath)

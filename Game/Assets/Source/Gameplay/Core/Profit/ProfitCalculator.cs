@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using Infrastructure.Time;
-using UnityEngine;
 
 namespace Gameplay.Core
 {
@@ -10,6 +10,10 @@ namespace Gameplay.Core
         private readonly ITimeService _timeService;
         private readonly Profit _profit;
         private readonly List<Shop> _openedShops = new List<Shop>();
+
+        private CancellationTokenSource _calculationProfitCts;
+        
+        public bool CalculationInProgress => !_calculationProfitCts.IsCancellationRequested;
 
         public ProfitCalculator(ITimeService timeService, Profit profit)
         {
@@ -22,32 +26,32 @@ namespace Gameplay.Core
             _openedShops.Add(shop);
         }
         
-        public void StartCalculatingProfit()
+        public async UniTaskVoid StartCalculatingProfit()
         {
-            _ = Task.Run(() =>
+            _calculationProfitCts = new CancellationTokenSource();
+            
+            while (!_calculationProfitCts.IsCancellationRequested)
             {
-                Debug.Log($"Start.");
+                float deltaTime = _timeService.DeltaTime;
                 
-                while (true)
+                foreach (Shop shop in _openedShops)
                 {
-                    List<Shop> shops = UnityEngine.Pool.ListPool<Shop>.Get();
-                    shops.AddRange(_openedShops);
+                    shop.TimeToCollect.Value -= deltaTime;
 
-                    foreach (Shop shop in shops)
+                    if (shop.TimeToCollect.Value <= 0.0f)
                     {
-                        shop.TimeToCollect.Value -= _timeService.DeltaTime;
-
-                        if (shop.TimeToCollect.Value <= 0.0f)
-                        {
-                            _profit.Money.Value += shop.GetProfit();
-                            Debug.Log($"Add profit.");
-                            shop.ResetProfitTime();
-                        }
+                        _profit.Money.Value += shop.GetProfit();
+                        shop.ResetProfitTime();
                     }
-                    
-                    UnityEngine.Pool.ListPool<Shop>.Release(shops);
                 }
-            });
+
+                await UniTask.WaitForSeconds(deltaTime);
+            }
+        }
+
+        public void StopCalculatingProfit()
+        {
+            _calculationProfitCts?.Cancel();
         }
     }
 }
