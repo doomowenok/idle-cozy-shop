@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UniRx;
 using ZLinq;
 
@@ -31,7 +30,10 @@ namespace Gameplay.Core
 
         public int GetProfit()
         {
-            return _possibleParts.AsValueEnumerable().Where(part => part.Opened).Sum(part => part.Income);
+            return _possibleParts
+                .AsValueEnumerable()
+                .Where(part => part.Opened)
+                .Sum(part => part.Income);
         }
 
         public void ResetProfitTime()

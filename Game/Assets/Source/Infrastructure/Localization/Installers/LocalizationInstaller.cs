@@ -7,7 +7,7 @@ namespace Infrastructure.Localization.Installers
     {
         public void Install(IContainerBuilder builder)
         {
-            builder.Register<LocalizationService>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<LocalizationService>(Lifetime.Singleton).As<ILocalizationService>();
         }
     }
 }

@@ -12,6 +12,7 @@ using Gameplay.Services.UI;
 using Infrastructure.EntityWorldManager.Installers;
 using Infrastructure.IdGenerator.Installers;
 using Infrastructure.Localization.Installers;
+using Infrastructure.Logger.Installers;
 using Infrastructure.SaveLoad;
 using Infrastructure.Time.Installers;
 using UnityEngine;
@@ -46,6 +47,7 @@ namespace Gameplay.Boot
             InstallBindings<TimeServiceInstaller>(builder);
             InstallBindings<IdGeneratorInstaller>(builder);
             InstallBindings<EntityWorldManagerInstaller>(builder);
+            InstallBindings<LoggerInstaller>(builder);
 
             // Services
             InstallBindings<PhysicsInstaller>(builder);
