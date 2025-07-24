@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using R3;
 using ZLinq;
 
@@ -40,5 +41,10 @@ namespace Gameplay.Core
         {
             TimeToCollect.Value = 10.0f;
         }
+    }
+
+    public class ShopData
+    {
+        public int ID;
     }
 }
