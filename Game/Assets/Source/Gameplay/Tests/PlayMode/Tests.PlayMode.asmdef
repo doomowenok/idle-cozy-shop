@@ -6,7 +6,6 @@
         "UnityEditor.TestRunner",
         "Gameplay",
         "Time",
-        "UniRx",
         "UniTask"
     ],
     "includePlatforms": [],
@@ -18,7 +17,8 @@
         "FluentAssertions.dll",
         "Moq.dll",
         "NSubstitute.dll",
-        "Castle.Core.dll"
+        "Castle.Core.dll",
+        "R3.dll"
     ],
     "autoReferenced": false,
     "defineConstraints": [

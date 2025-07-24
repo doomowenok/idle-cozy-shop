@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using Infrastructure.Config;
 using Infrastructure.SaveLoad;
+using R3;
 using Sirenix.Utilities;
-using UniRx;
 using UnityEngine;
 
 namespace Infrastructure.Localization
